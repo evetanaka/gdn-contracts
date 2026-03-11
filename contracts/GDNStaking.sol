@@ -32,17 +32,16 @@ contract GDNStaking is
 
     // ─── Reentrancy Guard (transient storage, upgrade-safe) ───
 
-    // Using a fixed slot in transient storage for reentrancy lock
-    bytes32 private constant _REENTRANCY_SLOT = keccak256("GDNStaking.reentrancyLock");
-
+    // Slot 0x1 in transient storage for reentrancy lock
+    // Transient storage is cleared after each tx — no persistent state
     modifier nonReentrant() {
         assembly {
-            if tload(_REENTRANCY_SLOT) { revert(0, 0) }
-            tstore(_REENTRANCY_SLOT, 1)
+            if tload(0x01) { revert(0, 0) }
+            tstore(0x01, 1)
         }
         _;
         assembly {
-            tstore(_REENTRANCY_SLOT, 0)
+            tstore(0x01, 0)
         }
     }
 
