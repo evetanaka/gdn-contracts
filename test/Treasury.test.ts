@@ -136,7 +136,7 @@ describe("Treasury", function () {
       // We need a staker to receive rewards — stake some GDN first
       await gdn.transfer(owner.address, ethers.parseUnits("1000", 18));
       await gdn.connect(owner).approve(await staking.getAddress(), ethers.MaxUint256);
-      await staking.connect(owner).stake(ethers.parseUnits("1000", 18), 0); // 3 month lock
+      await staking.connect(owner).stake(ethers.parseUnits("1000", 18), 3); // 3 month lock
 
       // Build swap calldata
       const swapCalldata = dexRouter.interface.encodeFunctionData("swap", [feeAmount]);
