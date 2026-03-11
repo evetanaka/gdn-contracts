@@ -16,8 +16,7 @@ describe("GordonVaultETH", function () {
 
     // Deploy GDNPriceFeed
     const PriceFeed = await ethers.getContractFactory("GDNPriceFeed");
-    const priceFeed = await PriceFeed.deploy(owner.address);
-    await priceFeed.updatePrice(ethers.parseUnits("1", 8)); // $1
+    const priceFeed = await PriceFeed.deploy(owner.address, ethers.parseUnits("1", 8));
 
     // Deploy GDNStaking
     const Staking = await ethers.getContractFactory("GDNStaking");
