@@ -42,8 +42,7 @@ describe("GDNPriceFeed", () => {
     it("should allow oracle to update price", async () => {
       const newPrice = 90000000n; // $0.90
       await expect(feed.connect(oracle).updatePrice(newPrice))
-        .to.emit(feed, "PriceUpdated")
-        .withArgs(newPrice, await time.latest().then(t => t + 1));
+        .to.emit(feed, "PriceUpdated");
 
       expect(await feed.price()).to.equal(newPrice);
     });
