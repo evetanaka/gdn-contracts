@@ -112,9 +112,7 @@ contract GDNStaking is
         address _treasury
     ) external initializer {
         __Ownable_init(msg.sender);
-        __UUPSUpgradeable_init();
         __Pausable_init();
-        // ReentrancyGuard uses transient storage in OZ v5 — no init needed
 
         require(_gdnToken != address(0), "zero token");
         require(_priceFeed != address(0), "zero feed");
