@@ -5,7 +5,6 @@ import "@openzeppelin/contracts-upgradeable/proxy/utils/Initializable.sol";
 import "@openzeppelin/contracts-upgradeable/proxy/utils/UUPSUpgradeable.sol";
 import "@openzeppelin/contracts-upgradeable/access/OwnableUpgradeable.sol";
 import "@openzeppelin/contracts-upgradeable/utils/PausableUpgradeable.sol";
-import "@openzeppelin/contracts/utils/ReentrancyGuard.sol";
 import "@openzeppelin/contracts/token/ERC20/IERC20.sol";
 import "@openzeppelin/contracts/token/ERC20/utils/SafeERC20.sol";
 import "./interfaces/IPriceFeed.sol";
@@ -27,10 +26,25 @@ contract GDNStaking is
     UUPSUpgradeable,
     OwnableUpgradeable,
     PausableUpgradeable,
-    ReentrancyGuard,
     IGDNStaking
 {
     using SafeERC20 for IERC20;
+
+    // ─── Reentrancy Guard (transient storage, upgrade-safe) ───
+
+    // Using a fixed slot in transient storage for reentrancy lock
+    bytes32 private constant _REENTRANCY_SLOT = keccak256("GDNStaking.reentrancyLock");
+
+    modifier nonReentrant() {
+        assembly {
+            if tload(_REENTRANCY_SLOT) { revert(0, 0) }
+            tstore(_REENTRANCY_SLOT, 1)
+        }
+        _;
+        assembly {
+            tstore(_REENTRANCY_SLOT, 0)
+        }
+    }
 
     // ─── Structs ─────────────────────────────────────
 
