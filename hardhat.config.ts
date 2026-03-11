@@ -6,8 +6,10 @@ import * as dotenv from "dotenv";
 dotenv.config();
 
 const DEPLOYER_KEY = process.env.DEPLOYER_PRIVATE_KEY || "0x" + "00".repeat(32);
+const SEPOLIA_RPC = process.env.SEPOLIA_RPC_URL || "https://rpc.sepolia.org";
 const POLYGON_RPC = process.env.POLYGON_RPC_URL || "";
 const AMOY_RPC = process.env.AMOY_RPC_URL || "https://rpc-amoy.polygon.technology";
+const ETHERSCAN_KEY = process.env.ETHERSCAN_API_KEY || "";
 const POLYGONSCAN_KEY = process.env.POLYGONSCAN_API_KEY || "";
 
 const config: HardhatUserConfig = {
@@ -23,6 +25,11 @@ const config: HardhatUserConfig = {
     hardhat: {
       chainId: 31337,
     },
+    sepolia: {
+      url: SEPOLIA_RPC,
+      chainId: 11155111,
+      accounts: [DEPLOYER_KEY],
+    },
     amoy: {
       url: AMOY_RPC,
       chainId: 80002,
@@ -36,6 +43,7 @@ const config: HardhatUserConfig = {
   },
   etherscan: {
     apiKey: {
+      sepolia: ETHERSCAN_KEY,
       polygon: POLYGONSCAN_KEY,
       polygonAmoy: POLYGONSCAN_KEY,
     },
