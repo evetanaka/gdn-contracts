@@ -1,0 +1,22 @@
+{
+  "name": "gdn-contracts",
+  "version": "1.0.0",
+  "description": "Gordon.fi Protocol — Smart Contracts",
+  "scripts": {
+    "compile": "hardhat compile",
+    "test": "hardhat test",
+    "test:gas": "REPORT_GAS=true hardhat test",
+    "deploy:testnet": "hardhat run scripts/deploy-testnet.ts --network amoy",
+    "deploy:mainnet": "hardhat run scripts/deploy-mainnet.ts --network polygon",
+    "verify": "hardhat run scripts/verify-all.ts",
+    "clean": "hardhat clean"
+  },
+  "devDependencies": {
+    "@nomicfoundation/hardhat-toolbox": "^4.0.0",
+    "@openzeppelin/contracts": "^5.6.1",
+    "@openzeppelin/contracts-upgradeable": "^5.6.1",
+    "@openzeppelin/hardhat-upgrades": "^3.9.1",
+    "dotenv": "^16.6.1",
+    "hardhat": "^2.28.6"
+  }
+}
