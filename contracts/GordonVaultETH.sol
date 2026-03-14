@@ -231,7 +231,7 @@ contract GordonVaultETH is
      *         This function transfers USDC to the admin and tracks the amount.
      * @param amount USDC to bridge (6 decimals)
      */
-    function bridgeToPolygon(uint256 amount) external onlyBridgeAdmin nonReentrant {
+    function bridgeToPolygon(uint256 amount) external virtual onlyBridgeAdmin nonReentrant {
         if (amount == 0) revert ZeroAmount();
 
         uint256 available = asset.balanceOf(address(this));
