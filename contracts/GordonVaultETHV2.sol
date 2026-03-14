@@ -13,6 +13,7 @@ import "@openzeppelin/contracts/token/ERC20/IERC20.sol";
  *
  *         Uses 2 slots from __gap (38 → 36).
  */
+/// @custom:oz-upgrades-unsafe-allow missing-initializer
 contract GordonVaultETHV2 is GordonVaultETH {
     using SafeERC20 for IERC20;
 

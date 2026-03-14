@@ -19,12 +19,11 @@ const VAULT_PROXIES: Record<string, string> = {
   politic: "0x2BF448256217E713C569d52015a8E4ed237F19fb",
 };
 
-// TODO: Fill these after generating mirror wallets from admin
 const MIRROR_WALLETS: Record<string, string> = {
-  crypto:  "", // Polygon EOA for crypto vault
-  sport:   "", // Polygon EOA for sport vault
-  finance: "", // Polygon EOA for finance vault
-  politic: "", // Polygon EOA for politic vault
+  crypto:  "0x5598A8ae361b70A8096198f93985E99c3cC82A9A",
+  sport:   "0x16BD7D71d70Efa2Ce0cac3008649ae2C5a83D3e1",
+  finance: "0x8DC6636be711104f332095962e2A03c331bB5C62",
+  politic: "0xC20764388eb003a155B763f7AE7B04C9Ce5C2Af8",
 };
 
 async function main() {
@@ -43,6 +42,16 @@ async function main() {
     console.log(`\n--- Upgrading ${slug} vault ---`);
     console.log(`  Proxy: ${proxyAddr}`);
     console.log(`  Mirror: ${mirror}`);
+
+    // Step 0: Force-import if not already registered
+    const V1Factory = await ethers.getContractFactory("GordonVaultETH");
+    try {
+      await upgrades.forceImport(proxyAddr, V1Factory, { kind: "uups" });
+      console.log(`  ✓ Force-imported V1 proxy`);
+    } catch (e: any) {
+      if (!e.message?.includes("already registered")) throw e;
+      console.log(`  ℹ Already registered`);
+    }
 
     // Step 1: Upgrade proxy to V2
     const upgraded = await upgrades.upgradeProxy(proxyAddr, V2Factory);
