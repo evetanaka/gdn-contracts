@@ -40,6 +40,11 @@ const config: HardhatUserConfig = {
       chainId: 137,
       accounts: [DEPLOYER_KEY],
     },
+    mainnet: {
+      url: process.env.MAINNET_RPC_URL || "https://ethereum-rpc.publicnode.com",
+      chainId: 1,
+      accounts: [DEPLOYER_KEY],
+    },
   },
   etherscan: {
     apiKey: {
