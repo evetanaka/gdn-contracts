@@ -258,7 +258,7 @@ contract GordonVaultETHMainnet is
     // ─── Bridge ──────────────────────────────────────
     // ═══════════════════════════════════════════════════
 
-    function bridgeToPolygon(uint256 amount) external onlyBridgeAdmin nonReentrant {
+    function bridgeToPolygon(uint256 amount) external virtual onlyBridgeAdmin nonReentrant {
         if (amount == 0) revert ZeroAmount();
         if (polygonMirrorWallet == address(0)) revert MirrorNotSet();
 
